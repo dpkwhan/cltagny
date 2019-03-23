@@ -18,22 +18,22 @@ function Home() {
             <Row type="flex" justify="center" align="bottom">
               <Col xs={24} sm={12} md={6} lg={6} xl={4} style={{ padding: 10 }}>
                 <Link to="signup">
-                  <Card style={{ height: 300 }} cover={<img alt="joinus" src={joinus} height={200} />}>
-                    <Meta avatar={<Icon type="user-add" style={{ fontSize: '24px' }} />} title="Sign up | 开通账户" />
+                  <Card cover={<img alt="joinus" src={joinus} height={200} />}>
+                    <Meta title="Sign up | 成为会员" />
                   </Card>
                 </Link>
               </Col>
               <Col xs={24} sm={12} md={6} lg={6} xl={4} style={{ padding: 10 }}>
                 <Link to="login">
-                  <Card style={{ height: 300 }} cover={<img alt="login" src={login} height={200} />}>
-                    <Meta avatar={<Icon type="login" style={{ fontSize: '24px' }} />} title="Sign in | 登录账户" />
+                  <Card cover={<img alt="login" src={login} height={200} />}>
+                    <Meta title="Sign in | 登录账户" />
                   </Card>
                 </Link>
               </Col>
               <Col xs={24} sm={12} md={6} lg={6} xl={4} style={{ padding: 10 }}>
                 <Link to="register">
-                  <Card style={{ height: 300 }} cover={<img alt="conference" src={conference} height={200} />}>
-                    <Meta avatar={<Icon type="schedule" style={{ fontSize: '24px' }} />} title="Register | 报名参会" />
+                  <Card cover={<img alt="conference" src={conference} height={200} />}>
+                    <Meta title="Register | 报名参会" />
                   </Card>
                 </Link>
               </Col>

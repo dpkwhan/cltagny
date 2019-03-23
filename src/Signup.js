@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, Input } from 'antd';
+import React, { Fragment } from 'react';
+import { Form, Input, Row, Col } from 'antd';
 
 const validateToNextPassword = (rule, value, callback) => {
   const form = this.props.form;
@@ -48,28 +48,36 @@ const CustomizedForm = Form.create({
 })(props => {
   const { getFieldDecorator } = props.form;
   return (
-    <Form>
-      <Form.Item label="Email">
-        {getFieldDecorator('email', {
-          rules: [
-            { type: 'email', message: 'The input is not valid email!' },
-            { required: true, message: 'Email is required!' }
-          ]
-        })(<Input />)}
-      </Form.Item>
+    <Fragment>
+      <Row type="flex" justify="center" align="bottom">
+        <Col xs={24} sm={12} md={6} lg={12} xl={12}>
+          <Form layout="vertical">
+            <Form.Item label="Email">
+              {getFieldDecorator('email', {
+                rules: [
+                  { type: 'email', message: 'The input is not valid email!' },
+                  { required: true, message: 'Email is required!' }
+                ]
+              })(<Input />)}
+            </Form.Item>
+            <Form.Item label="Password">
+              {getFieldDecorator('password', {
+                rules: [{ required: true, message: 'Password is required!' }, { validator: validateToNextPassword }]
+              })(<Input type="password" />)}
+            </Form.Item>
 
-      <Form.Item label="Password">
-        {getFieldDecorator('password', {
-          rules: [{ required: true, message: 'Password is required!' }, { validator: validateToNextPassword }]
-        })(<Input type="password" />)}
-      </Form.Item>
-
-      <Form.Item label="Confirm Password">
-        {getFieldDecorator('confirm', {
-          rules: [{ required: true, message: 'Please confirm your password!' }, { validator: compareToFirstPassword }]
-        })(<Input type="password" />)}
-      </Form.Item>
-    </Form>
+            <Form.Item label="Confirm Password">
+              {getFieldDecorator('confirm', {
+                rules: [
+                  { required: true, message: 'Please confirm your password!' },
+                  { validator: compareToFirstPassword }
+                ]
+              })(<Input type="password" />)}
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
+    </Fragment>
   );
 });
 
