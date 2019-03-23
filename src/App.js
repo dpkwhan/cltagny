@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import autoBind from 'react-autobind';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import PageHeader from './PageHeader';
+import PageFooter from './PageFooter';
 import Home from './Home';
 import Signup from './Signup';
 import './App.css';
@@ -30,6 +31,7 @@ class App extends Component {
             <Route exact name="signup" path="/signup" component={Signup} />
           </Switch>
         </BrowserRouter>
+        <PageFooter />
       </Fragment>
     );
   }

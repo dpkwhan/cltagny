@@ -36,3 +36,11 @@ body {
 .signup-form-button {
   width: 100%;
 }
+
+.center {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  color: rgba(0, 0, 0, 0.45);
+  font-weight: bold;
+}

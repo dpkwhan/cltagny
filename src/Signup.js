@@ -1,116 +1,162 @@
-import React, { Fragment } from 'react';
-import { Form, Input, Row, Col } from 'antd';
+import React from 'react';
+import 'antd/dist/antd.css';
+import './index.css';
+import { Form, Input, Tooltip, Icon, Select, Button } from 'antd';
 
-const validateToNextPassword = (rule, value, callback) => {
-  const form = this.props.form;
-  if (value && this.state.confirmDirty) {
-    form.validateFields(['confirm'], { force: true });
-  }
-  callback();
-};
+const { Option } = Select;
 
-const compareToFirstPassword = (rule, value, callback) => {
-  const form = this.props.form;
-  if (value && value !== form.getFieldValue('password')) {
-    callback('Two passwords that you enter is inconsistent!');
-  } else {
-    callback();
-  }
-};
-
-const CustomizedForm = Form.create({
-  name: 'global_state',
-
-  onFieldsChange(props, changedFields) {
-    props.onChange(changedFields);
-  },
-
-  mapPropsToFields(props) {
-    return {
-      email: Form.createFormField({
-        ...props.email,
-        value: props.email.value
-      }),
-      password: Form.createFormField({
-        ...props.password,
-        value: props.password.value
-      }),
-      confirm: Form.createFormField({
-        ...props.confirm,
-        value: props.confirm.value
-      })
-    };
-  },
-
-  onValuesChange(_, values) {
-    console.log(values);
-  }
-})(props => {
-  const { getFieldDecorator } = props.form;
-  return (
-    <Fragment>
-      <Row type="flex" justify="center" align="bottom">
-        <Col xs={24} sm={12} md={6} lg={12} xl={12}>
-          <Form layout="vertical">
-            <Form.Item label="Email">
-              {getFieldDecorator('email', {
-                rules: [
-                  { type: 'email', message: 'The input is not valid email!' },
-                  { required: true, message: 'Email is required!' }
-                ]
-              })(<Input />)}
-            </Form.Item>
-            <Form.Item label="Password">
-              {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Password is required!' }, { validator: validateToNextPassword }]
-              })(<Input type="password" />)}
-            </Form.Item>
-
-            <Form.Item label="Confirm Password">
-              {getFieldDecorator('confirm', {
-                rules: [
-                  { required: true, message: 'Please confirm your password!' },
-                  { validator: compareToFirstPassword }
-                ]
-              })(<Input type="password" />)}
-            </Form.Item>
-          </Form>
-        </Col>
-      </Row>
-    </Fragment>
-  );
-});
-
-class Signup extends React.Component {
+class SignupForm extends React.Component {
   state = {
-    fields: {
-      email: {
-        value: ''
-      },
-      password: {
-        value: ''
-      },
-      confirm: {
-        value: ''
+    confirmDirty: false,
+    autoCompleteResult: []
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
       }
+    });
+  };
+
+  handleConfirmBlur = e => {
+    const value = e.target.value;
+    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+  };
+
+  compareToFirstPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && value !== form.getFieldValue('password')) {
+      callback('Two passwords that you enter is inconsistent!');
+    } else {
+      callback();
     }
   };
 
-  handleFormChange = changedFields => {
-    this.setState(({ fields }) => ({
-      fields: { ...fields, ...changedFields }
-    }));
+  validateToNextPassword = (rule, value, callback) => {
+    const form = this.props.form;
+    if (value && this.state.confirmDirty) {
+      form.validateFields(['confirm'], { force: true });
+    }
+    callback();
+  };
+
+  handleWebsiteChange = value => {
+    let autoCompleteResult;
+    if (!value) {
+      autoCompleteResult = [];
+    } else {
+      autoCompleteResult = ['.com', '.org', '.net'].map(domain => `${value}${domain}`);
+    }
+    this.setState({ autoCompleteResult });
   };
 
   render() {
-    const fields = this.state.fields;
+    const { getFieldDecorator } = this.props.form;
+
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 24 },
+        sm: { span: 8 }
+      },
+      wrapperCol: {
+        xs: { span: 24 },
+        sm: { span: 16 }
+      }
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0
+        },
+        sm: {
+          span: 16,
+          offset: 8
+        }
+      }
+    };
+    const prefixSelector = getFieldDecorator('prefix', {
+      initialValue: '86'
+    })(
+      <Select style={{ width: 70 }}>
+        <Option value="86">+86</Option>
+        <Option value="87">+87</Option>
+      </Select>
+    );
+
     return (
-      <div>
-        <CustomizedForm {...fields} onChange={this.handleFormChange} />
-        <pre className="language-bash">{JSON.stringify(fields, null, 2)}</pre>
-      </div>
+      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+        <Form.Item label="E-mail">
+          {getFieldDecorator('email', {
+            rules: [
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!'
+              },
+              {
+                required: true,
+                message: 'Please input your E-mail!'
+              }
+            ]
+          })(<Input />)}
+        </Form.Item>
+        <Form.Item label="Password">
+          {getFieldDecorator('password', {
+            rules: [
+              {
+                required: true,
+                message: 'Please input your password!'
+              },
+              {
+                validator: this.validateToNextPassword
+              }
+            ]
+          })(<Input type="password" />)}
+        </Form.Item>
+        <Form.Item label="Confirm Password">
+          {getFieldDecorator('confirm', {
+            rules: [
+              {
+                required: true,
+                message: 'Please confirm your password!'
+              },
+              {
+                validator: this.compareToFirstPassword
+              }
+            ]
+          })(<Input type="password" onBlur={this.handleConfirmBlur} />)}
+        </Form.Item>
+        <Form.Item
+          label={
+            <span>
+              Nickname&nbsp;
+              <Tooltip title="What do you want others to call you?">
+                <Icon type="question-circle-o" />
+              </Tooltip>
+            </span>
+          }
+        >
+          {getFieldDecorator('nickname', {
+            rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }]
+          })(<Input />)}
+        </Form.Item>
+        <Form.Item label="Phone Number">
+          {getFieldDecorator('phone', {
+            rules: [{ required: true, message: 'Please input your phone number!' }]
+          })(<Input addonBefore={prefixSelector} style={{ width: '100%' }} />)}
+        </Form.Item>
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            Sign up
+          </Button>
+        </Form.Item>
+      </Form>
     );
   }
 }
+
+const Signup = Form.create({ name: 'signup' })(SignupForm);
 
 export default Signup;
