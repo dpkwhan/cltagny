@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Layout, Row, Col, Card } from 'antd';
 
 import joinus from './joinus.jpg';
-import login from './login.jpg';
+import signin from './signin.jpg';
 import conference from './conference.jpg';
 
 const { Content } = Layout;
@@ -27,8 +27,8 @@ function Home() {
                 </Link>
               </Col>
               <Col xs={24} sm={12} md={6} lg={6} xl={4} style={{ padding: 10 }}>
-                <Link to="login">
-                  <Card cover={<img alt="login" src={login} height={200} />}>
+                <Link to="signin">
+                  <Card cover={<img alt="signin" src={signin} height={200} />}>
                     <div className="center">
                       <p />
                       <p>Sign in | 登录账户</p>

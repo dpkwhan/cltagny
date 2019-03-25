@@ -15,7 +15,7 @@ function findSuffix(confNum) {
 }
 
 function PageHeader(props) {
-  const { confNum, date, address, city } = props;
+  const { confNum } = props;
   const suffix = findSuffix(confNum);
   return (
     <div className="conference-title" style={{ background: '#001529', paddingTop: 20, paddingBottom: 20 }}>
@@ -28,11 +28,6 @@ function PageHeader(props) {
       <h2>
         <font className="ch-title">第{confNum}届纽约中文教学国际研讨会</font>
       </h2>
-      <h3>
-        <font className="ch-title">
-          {date}, {address}, {city}
-        </font>
-      </h3>
     </div>
   );
 }

@@ -17,17 +17,6 @@ body {
   margin-top: -10;
 }
 
-.login-form {
-  /* max-width: 300px; */
-  width: 100%;
-}
-.login-form-forgot {
-  float: right;
-}
-.login-form-button {
-  width: 100%;
-}
-
 .signup-form {
   /* max-width: 300px; */
   width: 100%;
@@ -41,6 +30,11 @@ body {
   width: 100%;
   justify-content: space-between;
   display: flex;
-  color: rgba(0, 0, 0, 0.45);
+  color: black;
+  font-weight: bold;
+}
+
+.form-title {
+  font-size: 18px;
   font-weight: bold;
 }
