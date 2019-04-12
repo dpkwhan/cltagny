@@ -92,219 +92,76 @@ class SignupForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const maxWidth = { maxWidth: 400 };
-    const countryCodeSelector = getFieldDecorator('countryCode', { initialValue: 'US' })(CountrySelector);
 
     return (
       <Row type="flex" justify="center" align="bottom">
-        <Col xs={24} sm={18} md={16} lg={12} xl={8}>
-          <Form layout="horizontal" onSubmit={this.handleSubmit} style={{ padding: 10 }}>
-            <Row gutter={8}>
-              <h2>Create an Account</h2>
-            </Row>
-            <Row gutter={8}>
-              <span style={{ float: 'right' }}>带*号的必须填写</span>
-            </Row>
-            <Row gutter={8}>
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <Form.Item label="First Name" colon={false}>
-                  {getFieldDecorator('firstNameEng', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please input your first name in English!'
-                      }
-                    ]
-                  })(<Input style={maxWidth} placeholder="英文名" />)}
-                </Form.Item>
-              </Col>
+        <Col xs={24} sm={16} md={8} lg={6} xl={6}>
+          <Form layout="vertical" onSubmit={this.handleSubmit} style={{ padding: 30 }}>
+            <h2>Sign up | 加入我们</h2>
 
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <Form.Item label="Last Name" colon={false}>
-                  {getFieldDecorator('lastNameEng', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please input your last name in English!'
-                      }
-                    ]
-                  })(<Input style={maxWidth} placeholder="英文姓" />)}
-                </Form.Item>
-              </Col>
+            <Form.Item label="Email" colon={false}>
+              {getFieldDecorator('email', {
+                rules: [
+                  {
+                    type: 'email',
+                    message: 'The input is not valid email!'
+                  },
+                  {
+                    validator: this.validateToNextEmail
+                  }
+                ]
+              })(<Input prefix={<Icon type="mail" />} placeholder="电子邮件" />)}
+            </Form.Item>
 
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <Form.Item label="Email" colon={false}>
-                  {getFieldDecorator('email', {
-                    rules: [
-                      {
-                        type: 'email',
-                        message: 'The input is not valid email!'
-                      },
-                      {
-                        required: true,
-                        message: 'Please input your email!'
-                      },
-                      {
-                        validator: this.validateToNextEmail
-                      }
-                    ]
-                  })(<Input style={maxWidth} prefix={<Icon type="mail" />} placeholder="电子邮件" />)}
-                </Form.Item>
-              </Col>
+            <Form.Item label="Confirm Email" colon={false}>
+              {getFieldDecorator('emailRepeated', {
+                rules: [
+                  {
+                    type: 'email',
+                    message: 'The input is not valid email!'
+                  },
+                  {
+                    validator: this.compareToFirstEmail
+                  }
+                ]
+              })(<Input onBlur={this.handleEmailRepeatBlur} prefix={<Icon type="mail" />} placeholder="确认邮件" />)}
+            </Form.Item>
 
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <Form.Item label="Confirm Email" colon={false}>
-                  {getFieldDecorator('emailRepeated', {
-                    rules: [
-                      {
-                        type: 'email',
-                        message: 'The input is not valid email!'
-                      },
-                      {
-                        required: true,
-                        message: 'Please confirm your email!'
-                      },
-                      {
-                        validator: this.compareToFirstEmail
-                      }
-                    ]
-                  })(
-                    <Input
-                      style={maxWidth}
-                      onBlur={this.handleEmailRepeatBlur}
-                      prefix={<Icon type="mail" />}
-                      placeholder="确认电邮"
-                    />
-                  )}
-                </Form.Item>
-              </Col>
+            <Form.Item label="Password" colon={false}>
+              {getFieldDecorator('password', {
+                rules: [
+                  {
+                    validator: this.validateToNextPassword
+                  }
+                ]
+              })(<Input type="password" prefix={<Icon type="lock" />} placeholder="个人密码" />)}
+            </Form.Item>
 
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <Form.Item label="Password" colon={false}>
-                  {getFieldDecorator('password', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please input your password!'
-                      },
-                      {
-                        validator: this.validateToNextPassword
-                      }
-                    ]
-                  })(<Input type="password" style={maxWidth} prefix={<Icon type="lock" />} placeholder="个人密码" />)}
-                </Form.Item>
-              </Col>
+            <Form.Item label="Confirm Password" colon={false}>
+              {getFieldDecorator('confirm', {
+                rules: [
+                  {
+                    validator: this.compareToFirstPassword
+                  }
+                ]
+              })(
+                <Input
+                  type="password"
+                  onBlur={this.handleConfirmBlur}
+                  prefix={<Icon type="lock" />}
+                  placeholder="确认密码"
+                />
+              )}
+            </Form.Item>
 
-              <Col span={12}>
-                <Form.Item label="Confirm Password" colon={false}>
-                  {getFieldDecorator('confirm', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please confirm your password!'
-                      },
-                      {
-                        validator: this.compareToFirstPassword
-                      }
-                    ]
-                  })(
-                    <Input
-                      type="password"
-                      onBlur={this.handleConfirmBlur}
-                      style={maxWidth}
-                      prefix={<Icon type="lock" />}
-                      placeholder="确认密码"
-                    />
-                  )}
-                </Form.Item>
-              </Col>
-
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <Form.Item label="Affiliation" colon={false}>
-                  {getFieldDecorator('affiliation', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please input your affiliation!'
-                      }
-                    ]
-                  })(<Input style={maxWidth} placeholder="工作单位" />)}
-                </Form.Item>
-              </Col>
-
-              <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                <Form.Item label="Job Title" colon={false}>
-                  {getFieldDecorator('jobTitle', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please input your job title!'
-                      }
-                    ]
-                  })(<Input style={maxWidth} placeholder="工作职务" />)}
-                </Form.Item>
-              </Col>
-
-              <Col span={24}>
-                <Form.Item label="Biography" colon={false}>
-                  {getFieldDecorator('bio', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please input your biography'
-                      }
-                    ]
-                  })(<Input.TextArea autosize={{ minRows: 6 }} placeholder="个人简介" />)}
-                </Form.Item>
-              </Col>
-
-              <Col xs={24} sm={24} md={8} lg={8} xl={8}>
-                <Form.Item label="中文姓名" colon={false}>
-                  {getFieldDecorator('nameChn', {})(<Input style={maxWidth} placeholder="中文姓名" />)}
-                </Form.Item>
-              </Col>
-
-              <Col xs={24} sm={24} md={16} lg={16} xl={16}>
-                <Form.Item label="Mobile Number" colon={false}>
-                  {getFieldDecorator('phone', {
-                    rules: [
-                      {
-                        required: true,
-                        message: 'Please input your phone number!'
-                      },
-                      {
-                        validator: this.verifyPhoneNumber
-                      }
-                    ],
-                    validateTrigger: 'onBlur'
-                  })(
-                    <Input
-                      addonBefore={countryCodeSelector}
-                      style={maxWidth}
-                      prefix={<Icon type="phone" />}
-                      placeholder="手机号码"
-                    />
-                  )}
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <Divider />
-              </Col>
-            </Row>
-            <Row>
-              <Col span={24}>
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Sign up
-                  </Button>
-                  <span className="signup-already-has-account">
-                    Already has an account? <Link to="/signin">Sign in</Link>
-                  </span>
-                </Form.Item>
-              </Col>
-            </Row>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Sign up
+              </Button>
+              <span className="signup-already-has-account">
+                Already has an account? <Link to="/signin">Sign in</Link>
+              </span>
+            </Form.Item>
           </Form>
         </Col>
       </Row>

@@ -19,7 +19,7 @@ class SigninForm extends React.Component {
     return (
       <Row type="flex" justify="center" align="bottom">
         <Col xs={24} sm={16} md={8} lg={6} xl={6}>
-          <Form layout="vertical" onSubmit={this.handleSubmit} style={{ padding: 10 }}>
+          <Form layout="vertical" onSubmit={this.handleSubmit} style={{ padding: 30 }}>
             <h2>Sign in | 登录账户</h2>
 
             <Form.Item label="Email" colon={false}>

@@ -20,7 +20,7 @@ function Home() {
                   <Card cover={<img alt="joinus" src={joinus} height={200} />}>
                     <div className="center">
                       <p />
-                      <p>Sign up | 成为会员</p>
+                      <p>Sign up | 加入我们</p>
                       <p />
                     </div>
                   </Card>
