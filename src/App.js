@@ -55,7 +55,7 @@ class App extends Component {
     const { confNum } = this.state;
 
     return (
-      <Fragment>
+      <Fragment style={{ minHeight: '100%', position: 'relative' }}>
         <PageHeader confNum={confNum} />
         <BrowserRouter>
           <Switch>

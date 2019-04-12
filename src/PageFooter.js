@@ -1,5 +1,6 @@
 import React from 'react';
 import { Layout, Icon } from 'antd';
+import './PageFooter.css';
 const { Footer } = Layout;
 
 function PageFooter(props) {
@@ -7,7 +8,7 @@ function PageFooter(props) {
   const year = today.getFullYear();
 
   return (
-    <Footer style={{ textAlign: 'center' }}>
+    <Footer className="page-footer" style={{ textAlign: 'center' }}>
       <span>
         Copyright <Icon type="copyright" /> {year}
       </span>

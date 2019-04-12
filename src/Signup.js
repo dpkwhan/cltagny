@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Row, Col, Form, Input, Icon, Button, Divider } from 'antd';
+import { Row, Col, Form, Input, Icon, Button } from 'antd';
 import axios from 'axios';
-import CountrySelector from './CountrySelector';
 import './Signup.css';
 
 const numVerifyUrl = 'http://apilayer.net/api/validate?access_key=19b3880c5a8aa8c46a5f7cf3c5a4e1ce';
